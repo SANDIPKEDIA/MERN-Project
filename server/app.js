@@ -4,10 +4,12 @@ const express = require('express');
 const app = express();
 
 
+app.use(express.json())
 //my database name and password declare in config.env file i dont want to visible to anyone keeps it private thats why i used dotenv 
 dotenv.config({path:"./config.env"})
-
-
+// const User = require('./model/userSchema')
+//we link the router file to make our route easy
+app.use(require('./router/auth'));
 //connect with db folder where i cinnect with moongoose(database)
 require("./db/conn");
 
