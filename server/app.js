@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json())
 //my database name and password declare in config.env file i dont want to visible to anyone keeps it private thats why i used dotenv 
-dotenv.config({path:"./config.env"})
+dotenv.config({ path: "./config.env" })
 // const User = require('./model/userSchema')
 //we link the router file to make our route easy
 app.use(require('./router/auth'));
@@ -24,12 +24,12 @@ const PORT = process.env.PORT
 //Middleware
 
 
-const middleware=  (req,res,next)  =>{
+const middleware = (req, res, next) => {
     console.log('middle');
     next();
 
 }
-// middleware();
+
 
 
 
@@ -37,10 +37,10 @@ const middleware=  (req,res,next)  =>{
 app.get('/', (req, res) => {
     res.send("Hello from Backend");
 })
-app.get('/aboutme',middleware, (req, res) => {
+app.get('/aboutme', middleware, (req, res) => {
     console.log("about");
     res.send("Hello from aboutme");
-    
+
 })
 
 app.get('/contact', (req, res) => {
