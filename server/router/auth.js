@@ -67,21 +67,54 @@ router.post('/register', async (req, res) => {
          */
 
         user.save();
-        res.status(201).json({message:"User Registered Successfully"})
+        res.status(201).json({ message: "User Registered Successfully" })
 
         /**
          * also we can do this
          */
 
-    //     const userRegister = user.save()
+        //     const userRegister = user.save()
 
-    //     if (userRegister) {
-    //         res.status(201).json({ message: "User Registered Successfully" })
-    //     }
+        //     if (userRegister) {
+        //         res.status(201).json({ message: "User Registered Successfully" })
+        //     }
 
     } catch (err) {
         console.log(err);
     }
+})
+
+
+
+/*
+*login route
+*/
+
+router.post('/signin',async(req,res)=>{
+    // console.log(req.body);
+    // res.json({message:"successed"})'
+
+    try{
+        const{email, password} = req.body;
+
+        if(!email || !password) {
+            return res.status(400).json({error:"Please fill the data"})
+        }
+
+        const userLogin = await User.findOne({email})
+
+        if(!userLogin){
+            res.status(400).json({error:"Invalid Details"})
+            
+        }else{
+            res.status(200).json({message:"Login Successfull"})
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+
 })
 
 
@@ -96,8 +129,4 @@ router.post('/register', async (req, res) => {
 
 
 
-
-
-
-
-    module.exports = router;
+module.exports = router;
