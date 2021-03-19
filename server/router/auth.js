@@ -50,8 +50,8 @@ router.get('/', (req, res) => {
 
 router.post('/register', async (req, res) => {
     /*validate if user missed anything to be filled*/
-    const { name, email, phone, work, cpassword } = req.body;
-    if (!name || !email || !phone || !work || !cpassword) {
+    const { name, email, phone, work, password, cpassword } = req.body;
+    if (!name || !email || !phone || !work || !password || !cpassword) {
         return res.status(422).json({ error: "fill all filled" });
     }
 
@@ -61,7 +61,7 @@ router.post('/register', async (req, res) => {
         if (userExist) {
             return res.status(422).json({ error: "Email Already Exist" });
         }
-        const user = new User({ name, email, phone, work, cpassword });
+        const user = new User({ name, email, phone, work,password, cpassword });
         /**
          * we can do this (short-cut)
          */
