@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
-//for password hashing
-const bycrypt = require('bcryptjs')
-
+/*
+*for password hashing
+*/
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -31,24 +32,32 @@ const userSchema = new mongoose.Schema({
 })
 
 
+
 /**
  * Hasing the Password for security . By hashing no one could know/saw your real password in database
  */
 
-//beacuse yaha p this keyword arha hein so ye keyword totally opposite work karta hein jab hmlg fat-arrow function lagate hein that's why we using normal funtion here 
-//jab jab save method use hoyega us se pehele ye hasing hoyega password k liye not for all the time 
+/**
+ * beacuse yaha p this keyword arha hein so ye keyword totally opposite work karta hein jab hmlg fat-arrow function lagate hein that's why we using normal funtion here 
+ * jab jab save method use hoyega us se pehele ye hasing hoyega password k liye not for all the time 
+*/
+
 
 userSchema.pre('save', async function (next) {
 
     //isModified is bycrypt function 
 //hmlgogo bass password dikhana hash karna hein that's why we give password inthe parameter
+
+
     if (this.isModified('password')) {
-        this.password = await bycrypt.hash(this.password, 12);
-        this.cpassword = await bycrypt.hash(this.cpassword, 12);
+        this.password = await bcrypt.hash(this.password, 12);
+        this.cpassword = await bcrypt.hash(this.cpassword, 12);
 
     }
     next();
+
 })
+
 
 
 

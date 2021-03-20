@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs')
 
 require('../db/conn');
 
@@ -56,12 +57,15 @@ router.post('/register', async (req, res) => {
     }
 
     try {
+        //Here we check email already exist or not register time
         const userExist = await User.findOne({ email })
 
         if (userExist) {
             return res.status(422).json({ error: "Email Already Exist" });
         }
-        const user = new User({ name, email, phone, work,password, cpassword });
+
+
+        const user = new User({ name, email, phone, work, password, cpassword });
         /**
          * we can do this (short-cut)
          */
@@ -90,27 +94,37 @@ router.post('/register', async (req, res) => {
 *login route
 */
 
-router.post('/signin',async(req,res)=>{
+router.post('/signin', async (req, res) => {
     // console.log(req.body);
     // res.json({message:"successed"})'
 
-    try{
-        const{email, password} = req.body;
+    try {
+        const { email, password } = req.body;
 
-        if(!email || !password) {
-            return res.status(400).json({error:"Please fill the data"})
+        if (!email || !password) {
+            return res.status(400).json({ error: "Please fill the data" })
+        }
+        // here we check the email and password in login if email is valid then login successfull
+        //here we check email
+        const userLogin = await User.findOne({ email })
+
+        if (userLogin) {
+            //user ne jo login form k password mein dalaa wo password or userExist  password k sath compare karega
+            //check password is match or not
+
+            const isMatch = await bcrypt.compare(password, userLogin.password)
+            if (!isMatch) {
+                res.status(400).json({ error: "Invalid Details" })
+
+            } else {
+                res.status(200).json({ message: "Login Successfull" })
+            }
+        }
+        else {
+            res.status(400).json({ error: "Invalid Details" })
         }
 
-        const userLogin = await User.findOne({email})
-
-        if(!userLogin){
-            res.status(400).json({error:"Invalid Details"})
-            
-        }else{
-            res.status(200).json({message:"Login Successfull"})
-        }
-
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 
