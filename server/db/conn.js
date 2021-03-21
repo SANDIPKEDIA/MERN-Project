@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 
 //declare database
 const DB = process.env.DATABASE;
-mongoose.connect(DB,{
+mongoose.connect(DB, {
     useNewUrlParser: true,  //for remove deprication warning
     useCreateIndex: true,
-    useUnifiedTopology:true,
-    useFindAndModify:false
+    useUnifiedTopology: true,
+    useFindAndModify: false
 
-}).then(() =>{
+}).then(() => {
     console.log("connection successfully");
-}).catch((err)=>
+}).catch((err) =>
     console.log('no connection'));

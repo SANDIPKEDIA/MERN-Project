@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
 
 require('../db/conn');
 
@@ -97,6 +98,7 @@ router.post('/register', async (req, res) => {
 router.post('/signin', async (req, res) => {
     // console.log(req.body);
     // res.json({message:"successed"})'
+    let token;
 
     try {
         const { email, password } = req.body;
@@ -111,8 +113,11 @@ router.post('/signin', async (req, res) => {
         if (userLogin) {
             //user ne jo login form k password mein dalaa wo password or userExist  password k sath compare karega
             //check password is match or not
-
             const isMatch = await bcrypt.compare(password, userLogin.password)
+            //login karte time token generate karwa rahe hein with generateAuthToken ka function declare kr k jo humne User.js pein banaya hein
+            const token = await userLogin.generateAuthToken();
+
+            console.log(token);
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Details" })
 
