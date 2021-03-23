@@ -35,6 +35,7 @@ const middleware = (req, res, next) => {
 
 
 app.get('/', (req, res) => {
+    res.cookie("Test",'Sandip')
     res.send("Hello from Backend");
 })
 app.get('/aboutme', middleware, (req, res) => {
@@ -44,6 +45,7 @@ app.get('/aboutme', middleware, (req, res) => {
 })
 
 app.get('/contact', (req, res) => {
+    res.cookie("Testcontact",'Sandip')
     res.send("Hello from contact");
 })
 

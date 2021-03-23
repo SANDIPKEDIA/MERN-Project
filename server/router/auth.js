@@ -98,7 +98,7 @@ router.post('/register', async (req, res) => {
 router.post('/signin', async (req, res) => {
     // console.log(req.body);
     // res.json({message:"successed"})'
-    let token;
+    // let token;
 
     try {
         const { email, password } = req.body;
@@ -118,6 +118,14 @@ router.post('/signin', async (req, res) => {
             const token = await userLogin.generateAuthToken();
 
             console.log(token);
+            //save token in cookie
+            res.cookie("jwtoken",NewToken,{
+                expires:new Date(Date.now()+25892000000), //it's mean 30 days
+                httpOnly:true
+            });
+            
+ 
+
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Details" })
 
