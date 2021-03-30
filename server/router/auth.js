@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
+const sgMail = require('@sendgrid/mail')
 
 require('../db/conn');
 
@@ -142,6 +143,34 @@ router.post('/signin', async (req, res) => {
     }
 
 
+})
+
+
+
+router.post('/send', async (req, res) => {
+
+    try {
+        const API_KEY = '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'
+  
+        sgMail.setApikey(API_KEY);
+  
+  
+        const msg = {
+          to: 'sandipkedia1711998@gmail.com',
+          from: 'sumitrao160194@gmail.com',
+          subject: 'testing',
+          text: 'textting',
+          html: '<h1>h1tag</h1>'
+        }
+
+        sgMail.send(msg)
+    }
+        catch (error) {
+            console.log(error);
+        }
+    
+  
+  
 })
 
 
