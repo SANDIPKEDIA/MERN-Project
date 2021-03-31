@@ -9,6 +9,7 @@ import Contact from "./components/Contact"
 
 import Login from "./components/Login"
 import Signup from "./components/Signup"
+import ErrorPage from "./components/ErrorPage"
 
 
 
@@ -21,6 +22,7 @@ const App = () => {
        <Route path="/contact"><Contact /></Route>
        <Route path="/login"><Login /></Route>
        <Route path="/signup"><Signup /></Route>
+       <Route><ErrorPage /></Route>
        
        </>
     )
